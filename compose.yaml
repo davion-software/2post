@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: two_post_local
       POSTGRES_DB: two_post
     ports:
-      - '127.0.0.1:5432:5432'
+      - '127.0.0.1:${POSTGRES_PORT:-5432}:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init-test-database.sql:/docker-entrypoint-initdb.d/01-test-database.sql:ro

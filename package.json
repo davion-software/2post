@@ -10,11 +10,6 @@
     "pnpm": "10.34.5"
   },
   "packageManager": "pnpm@10.34.5",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  },
   "scripts": {
     "build": "nest build",
     "start:api": "node --env-file-if-exists=.env dist/entrypoints/api.js",
@@ -26,13 +21,22 @@
     "db:down": "docker compose down",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "pnpm build && node --env-file-if-exists=.env dist/entrypoints/migrate.js",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "typecheck": "pnpm build && tsc --noEmit -p tsconfig.tools.json",
-    "test": "pnpm build && vitest run",
-    "test:integration": "pnpm build && node --env-file-if-exists=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.mts",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && vitest run"
+    "lint": "pnpm build && vp lint --deny-warnings .",
+    "format": "vp fmt .",
+    "format:check": "vp fmt --check .",
+    "typecheck": "pnpm build && tsc --noEmit -p tsconfig.tools.json && tsc --noEmit -p scripts/tsconfig.json",
+    "test": "pnpm build && vp test --project unit",
+    "test:integration": "pnpm build && vp test --project integration",
+    "check": "pnpm build && vp check --deny-warnings && tsc --noEmit -p tsconfig.tools.json && tsc --noEmit -p scripts/tsconfig.json && pnpm architecture:check && vp test --project unit",
+    "dev:doctor": "node scripts/doctor.mjs",
+    "dev:setup": "node scripts/setup.mjs",
+    "dev": "node scripts/dev.mjs",
+    "architecture:check": "fallow architecture && fallow --config .fallow-modules.json architecture",
+    "architecture:report": "fallow",
+    "db:check": "node scripts/check-migrations.mjs",
+    "secrets:check": "node scripts/check-secrets.mjs",
+    "verify": "node scripts/verify.mjs",
+    "tooling:check": "node scripts/check-tooling.mjs"
   },
   "dependencies": {
     "@nestjs/common": "12.2.0",
@@ -46,15 +50,12 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@eslint/js": "10.0.1",
     "@nestjs/cli": "12.0.10",
     "@types/node": "24.19.2",
     "@types/pg": "8.23.1",
     "drizzle-kit": "0.31.11",
-    "eslint": "10.13.0",
-    "prettier": "3.9.10",
+    "fallow": "3.35.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.72.0",
-    "vitest": "5.0.5"
+    "vite-plus": "catalog:"
   }
 }

@@ -1,0 +1,100 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "minimumVersion": "3.35.0",
+  "usedClassMembers": [
+    { "implements": "LoggerService", "members": ["warn", "debug", "verbose"] }
+  ],
+  "entry": [
+    "src/entrypoints/*.ts",
+    "scripts/*.mjs",
+    "test/**/*.test.ts",
+    "test/helpers/compiled.ts",
+    "vite.config.ts",
+    "drizzle.config.ts",
+    "db/schema.ts"
+  ],
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "coverage/**",
+    "db/migrations/**"
+  ],
+  "boundaries": {
+    "zones": [
+      {
+        "name": "domain",
+        "patterns": ["src/domain/**", "src/modules/*/domain/**"]
+      },
+      {
+        "name": "application",
+        "patterns": ["src/application/**", "src/modules/*/application/**"]
+      },
+      {
+        "name": "interfaces",
+        "patterns": ["src/interfaces/**", "src/modules/*/interfaces/**"]
+      },
+      { "name": "contracts", "patterns": ["src/modules/*/*.contracts.ts"] },
+      {
+        "name": "schemas",
+        "patterns": ["src/modules/*/*.schema.ts", "db/schema.ts"]
+      },
+      {
+        "name": "adapters",
+        "patterns": ["src/adapters/**", "src/modules/*/adapters/**"]
+      },
+      {
+        "name": "platform",
+        "patterns": ["src/config/**", "src/observability/**"]
+      },
+      {
+        "name": "composition",
+        "patterns": [
+          "src/entrypoints/**",
+          "src/bootstrap/**",
+          "src/*.module.ts",
+          "src/modules/*/*.module.ts",
+          "src/worker/**"
+        ]
+      }
+    ],
+    "rules": [
+      { "from": "domain", "allow": ["domain", "contracts"] },
+      {
+        "from": "application",
+        "allow": ["application", "domain", "contracts"]
+      },
+      { "from": "interfaces", "allow": ["application", "domain", "contracts"] },
+      { "from": "contracts", "allow": ["contracts", "domain"] },
+      { "from": "schemas", "allow": ["schemas"] },
+      {
+        "from": "adapters",
+        "allow": [
+          "adapters",
+          "application",
+          "domain",
+          "contracts",
+          "schemas",
+          "platform"
+        ]
+      },
+      { "from": "platform", "allow": ["platform"] },
+      {
+        "from": "composition",
+        "allow": [
+          "composition",
+          "platform",
+          "adapters",
+          "application",
+          "domain",
+          "contracts",
+          "interfaces",
+          "schemas"
+        ]
+      }
+    ],
+    "coverage": {
+      "requireAllFiles": true,
+      "allowUnmatched": ["test/**", "scripts/**", "*.config.*"]
+    }
+  }
+}

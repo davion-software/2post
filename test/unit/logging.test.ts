@@ -1,5 +1,5 @@
 import { Writable } from 'node:stream';
-import { expect, it } from 'vitest';
+import { expect, it } from 'vite-plus/test';
 import { loadConfig, AppLogger } from '../helpers/compiled.js';
 
 it('does not serialize raw exceptions into application logs', () => {

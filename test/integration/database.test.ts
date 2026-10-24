@@ -8,7 +8,7 @@ import {
   describe,
   expect,
   it,
-} from 'vitest';
+} from 'vite-plus/test';
 import { runMigrations } from '../helpers/compiled.js';
 
 const databaseUrl = process.env.TEST_DATABASE_URL;

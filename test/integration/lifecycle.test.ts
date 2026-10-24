@@ -1,8 +1,8 @@
 import { spawn, type ChildProcess } from 'node:child_process';
 import { once } from 'node:events';
-import { createServer } from 'node:net';
-import { afterEach, expect, it } from 'vitest';
+import { afterEach, expect, it } from 'vite-plus/test';
 import { createWorkerApplication, loadConfig } from '../helpers/compiled.js';
+import { freePort } from '../helpers/ports.js';
 
 const databaseUrl = process.env.TEST_DATABASE_URL;
 if (!databaseUrl)
@@ -19,18 +19,6 @@ afterEach(async () => {
     }),
   );
 });
-
-async function freePort(): Promise<number> {
-  const server = createServer();
-  server.listen(0, '127.0.0.1');
-  await once(server, 'listening');
-  const address = server.address();
-  if (!address || typeof address === 'string') throw new Error('No test port');
-  await new Promise<void>((resolve, reject) =>
-    server.close((error) => (error ? reject(error) : resolve())),
-  );
-  return address.port;
-}
 
 it.each(['api', 'worker'])(
   'starts the compiled %s process and closes cleanly on SIGTERM',

@@ -8,7 +8,7 @@ Fuentes: [PRD](PRD.md), [brief del founder](references/PRODUCT-BRIEF.md) y [veri
 
 El stack acordado es TypeScript sobre Node.js 24 LTS, NestJS con platform-fastify y PostgreSQL, con monolito modular y dos procesos del mismo código: API y worker. REST y MCP ejecutan los mismos casos de uso. El dominio no importa NestJS, ORM, Social SDK ni DTOs de terceros.
 
-Se proponen Drizzle para migraciones y acceso SQL tipado, pg-boss para jobs sobre PostgreSQL y almacenamiento privado compatible con S3 para imágenes. Estos componentes adicionales son elecciones de diseño, no dependencias instaladas. Se validan en la fase P0. En hosted, los objetos van a Amazon S3 en `us-east-1`; el core depende de `ObjectStore`, de modo que self-hosted puede usar otro backend compatible. No se añade Redis ni un servicio por red al piloto.
+Drizzle ya está incorporado para migraciones y acceso SQL tipado. pg-boss para jobs sobre PostgreSQL y almacenamiento privado compatible con S3 para imágenes siguen como propuestas por validar en P0. En hosted, los objetos van a Amazon S3 en `us-east-1`; el core depende de `ObjectStore`, de modo que self-hosted puede usar otro backend compatible. No se añade Redis ni un servicio por red al piloto.
 
 Social SDK es [`@opencoredev/social-sdk`](https://github.com/opencoredev/social-sdk), decidido por el founder (PRD D-16). Se usa desde el MVP solo con adapters directos y credenciales de aplicación propias; no se instalan ni configuran backends gestionados. El paquete exige Node.js 22.12 o superior y es ESM-only, sin build CommonJS. La aplicación NestJS se emite como CommonJS (`"type": "commonjs"`), con `module` y `moduleResolution` en `nodenext`. Un provider asíncrono carga el SDK mediante `await import("@opencoredev/social-sdk")` exclusivamente dentro de `adapters/social-sdk/`. La salida compilada conserva `import()` nativo; no usar una configuración que lo transforme en `require()`. Los imports exclusivos de tipos ESM, si hacen falta, usan `resolution-mode: import` y no salen del adapter. El dominio recibe tipos propios de `SocialGateway`. P0 verifica el build y el arranque compilado en Node.js 24, incluida carga ESM con top-level await; no basta ejecutar con tsx. Se fija versión exacta en lockfile, y cada red se habilita tras pruebas de integración de sus capacidades efectivas. Ver [evidencia](references/INTEGRATION-RESEARCH.md). No importar tipos del paquete fuera de `adapters/social-sdk/`.
 
@@ -27,6 +27,8 @@ Para cambiar después se exige versión oficial estable y mantenida, documentaci
 Fijar el patch de Node.js 24, TypeScript y NestJS en P0 y el lockfile. Mantener `experimentalDecorators` y `emitDecoratorMetadata` para la inyección y validación que los requieran. Vitest cubre dominio, contratos e integración. Las pruebas de Nest deben usar código compilado por TypeScript o una transformación que emita metadata compatible y esté probada en P0; el transpile predeterminado de esbuild no sustituye esa comprobación. El build de producción y su arranque son puertas independientes del test runner.
 
 ## 2. Estructura de código prevista
+
+Actualización del 2026-10-24: las funcionalidades agrupan casos de uso e interfaces dentro de su módulo. La infraestructura común conserva sus carpetas compartidas. [ARCHITECTURE.md](ARCHITECTURE.md) describe las reglas verificadas por Fallow y el ejemplo de `operations`. Vite+ proporciona las herramientas de lint, formato y pruebas; la compilación Nest conserva la metadata de decoradores.
 
 Un paquete Node con dos entrypoints evita duplicar reglas entre procesos:
 

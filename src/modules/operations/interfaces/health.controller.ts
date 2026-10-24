@@ -4,7 +4,7 @@ import {
   Header,
   ServiceUnavailableException,
 } from '@nestjs/common';
-import { CheckReadiness } from '../../application/check-readiness.js';
+import { CheckReadiness } from '../application/check-readiness.js';
 
 @Controller('health')
 export class HealthController {

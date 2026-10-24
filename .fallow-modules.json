@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "extends": ["./.fallowrc.json"],
+  "boundaries": {
+    "zones": [
+      {
+        "name": "public",
+        "patterns": ["src/modules/*/*.contracts.ts"]
+      },
+      { "name": "schemas", "patterns": ["src/modules/*/*.schema.ts"] },
+      { "name": "module", "autoDiscover": ["src/modules"] },
+      {
+        "name": "shared",
+        "patterns": [
+          "src/application/**",
+          "src/domain/**",
+          "src/adapters/**",
+          "src/config/**",
+          "src/observability/**",
+          "src/bootstrap/**",
+          "src/entrypoints/**",
+          "src/worker/**",
+          "src/*.module.ts",
+          "db/**"
+        ]
+      }
+    ],
+    "rules": [
+      { "from": "module", "allow": ["public", "shared"] },
+      { "from": "public", "allow": ["public", "module", "shared"] },
+      { "from": "schemas", "allow": ["schemas"] },
+      { "from": "shared", "allow": ["shared", "public", "module", "schemas"] }
+    ]
+  }
+}

@@ -4,7 +4,9 @@
     "rootDir": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "noEmit": true
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true
   },
   "include": ["test/**/*.ts", "*.config.ts", "*.config.mts", "db/schema.ts"]
 }

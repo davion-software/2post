@@ -1,5 +1,7 @@
 # Documentación de 2post
 
+Para trabajar en el código, consulta [el entorno local](../README.md), [los límites de arquitectura](ARCHITECTURE.md) y [las decisiones registradas](adr/README.md).
+
 Estado: diseño propuesto del MVP y base ejecutable inicial del backend, actualizado el 2026-10-22. API y worker arrancan y existe una migración de users/workspaces. Los casos de negocio siguen pendientes; P0 y P1 no están completados. Ver [arranque y verificación local](../README.md).
 
 1. [PRD](PRD.md): producto, alcance, requisitos con criterios de aceptación, piloto, métricas y roadmap.

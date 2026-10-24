@@ -1,0 +1,13 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Archivos generados y dependencias, que no se publican con el código fuente"
+paths = ['''(^|/)(node_modules|dist|coverage|\.git|\.fallow|\.vite)/''']
+
+[[allowlists]]
+description = "Clave de idempotencia de ejemplo del PRD, que no autentica solicitudes"
+condition = "AND"
+paths = ['''(^|/)docs/PRD\.md$''']
+regexTarget = "secret"
+regexes = ['''^6f1c0e7e-1b5a-4f0e-9a51-2d1f3b0e8c11$''']

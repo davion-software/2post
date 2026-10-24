@@ -1,4 +1,4 @@
-import type { DatabaseProbe } from './ports/database-probe.js';
+import type { DatabaseProbe } from '../../../application/ports/database-probe.js';
 
 export type Readiness = {
   status: 'ok' | 'not_ready';
