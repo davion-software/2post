@@ -1,8 +1,8 @@
 # 2post: plan de implementación
 
-Versión: 0.3. Fecha: 2026-10-21. Estado: listo para revisión técnica, ninguna fase implementada.
+Versión: 0.3. Fecha: 2026-10-21. Estado: base ejecutable inicial incorporada el 2026-10-22; ninguna fase completada. P0 y los casos de negocio de P1 siguen pendientes.
 
-Este plan implementa el [PRD](PRD.md) mediante los contratos del [TRD](TRD.md) y el [Backend Schema](BACKEND-SCHEMA.md). Parte de un repositorio con README y documentación, sin aplicación ni infraestructura provisionada. Incluye acceso de pago con cobro externo, activación manual, cuotas y prepago de X. La facturación automatizada, UI editorial y asistencia IA quedan para después.
+Este plan implementa el [PRD](PRD.md) mediante los contratos del [TRD](TRD.md) y el [Backend Schema](BACKEND-SCHEMA.md). Partió de un repositorio con README y documentación. La inicialización posterior aporta API, worker, configuración, PostgreSQL local y migración inicial; no provisiona infraestructura de producción ni demuestra las puertas de P0. Incluye acceso de pago con cobro externo, activación manual, cuotas y prepago de X. La facturación automatizada, UI editorial y asistencia IA quedan para después.
 
 ## 1. Resultado y etiquetas de entrega
 

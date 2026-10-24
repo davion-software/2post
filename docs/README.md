@@ -1,6 +1,6 @@
 # Documentación de 2post
 
-Estado: diseño propuesto del MVP, actualizado el 2026-10-21. No hay backend implementado en este repositorio.
+Estado: diseño propuesto del MVP y base ejecutable inicial del backend, actualizado el 2026-10-22. API y worker arrancan y existe una migración de users/workspaces. Los casos de negocio siguen pendientes; P0 y P1 no están completados. Ver [arranque y verificación local](../README.md).
 
 1. [PRD](PRD.md): producto, alcance, requisitos con criterios de aceptación, piloto, métricas y roadmap.
 2. [TRD](TRD.md): arquitectura, contratos REST y MCP, ejecución, seguridad y operación.

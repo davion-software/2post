@@ -1,6 +1,6 @@
 # 2post: esquema del backend
 
-Versión: 0.3. Fecha: 2026-10-21. Estado: diseño propuesto para PostgreSQL, no migraciones ejecutadas.
+Versión: 0.3. Fecha: 2026-10-21. Estado: diseño objetivo para PostgreSQL. La base inicial del 2026-10-22 incluye la migración de users/workspaces; el resto del esquema sigue pendiente.
 
 Derivado del [PRD](PRD.md) y los contratos del [TRD](TRD.md). El [plan](IMPLEMENTATION-PLAN.md) ordena sus migraciones. Los nombres SQL son normativos para el diseño inicial; el ORM y la versión exacta se fijan al implementar.
 

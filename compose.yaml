@@ -1,0 +1,22 @@
+name: two-post
+
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_USER: two_post
+      POSTGRES_PASSWORD: two_post_local
+      POSTGRES_DB: two_post
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init-test-database.sql:/docker-entrypoint-initdb.d/01-test-database.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U two_post -d two_post']
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  postgres_data:

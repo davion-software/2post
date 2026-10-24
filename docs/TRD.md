@@ -1,6 +1,6 @@
 # 2post: requisitos y diseño técnico
 
-Versión: 0.3. Fecha: 2026-10-21. Estado: diseño propuesto, sin implementación.
+Versión: 0.3. Fecha: 2026-10-21. Estado: diseño objetivo. El 2026-10-22 se incorporó la base ejecutable descrita en el README; los contratos de producto siguen pendientes.
 
 Fuentes: [PRD](PRD.md), [brief del founder](references/PRODUCT-BRIEF.md) y [verificación de integraciones](references/INTEGRATION-RESEARCH.md). El PRD gobierna alcance y aceptación. Este documento define contratos y mecanismos. [Backend Schema](BACKEND-SCHEMA.md) gobierna persistencia. [Implementation Plan](IMPLEMENTATION-PLAN.md) gobierna el orden de entrega.
 
@@ -62,7 +62,7 @@ db/migrations/
 test/{unit,integration,contract,e2e}/
 ```
 
-La estructura es propuesta, no un árbol existente. Los módulos se organizan por responsabilidad. `domain` contiene estados y reglas compartidas, y `application` los contratos comunes. No crear capas vacías por módulo. Una dependencia cruza módulos mediante un caso de uso o puerto explícito.
+La estructura completa es objetivo; el README describe el subconjunto existente. Los módulos se organizan por responsabilidad. `domain` contiene estados y reglas compartidas, y `application` los contratos comunes. No crear capas vacías por módulo. Una dependencia cruza módulos mediante un caso de uso o puerto explícito.
 
 API acepta intención, valida, persiste y responde. Worker ejecuta publicaciones, polling de resultados, reconciliación, refresh de credenciales y webhooks. Se despliegan por separado, con límites de conexiones y concurrencia. El [adapter oficial de Fastify](https://docs.nestjs.com/techniques/performance) es la base HTTP; validar el SDK MCP elegido sobre él.
 

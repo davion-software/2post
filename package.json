@@ -1,0 +1,60 @@
+{
+  "name": "2post",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Infraestructura de publicación social mediante REST y MCP",
+  "type": "commonjs",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=24.18.1 <25",
+    "pnpm": "10.34.5"
+  },
+  "packageManager": "pnpm@10.34.5",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "scripts": {
+    "build": "nest build",
+    "start:api": "node --env-file-if-exists=.env dist/entrypoints/api.js",
+    "start:worker": "node --env-file-if-exists=.env dist/entrypoints/worker.js",
+    "dev:build": "nest build --watch",
+    "dev:api": "node --env-file-if-exists=.env --watch dist/entrypoints/api.js",
+    "dev:worker": "node --env-file-if-exists=.env --watch dist/entrypoints/worker.js",
+    "db:up": "docker compose up -d --wait postgres",
+    "db:down": "docker compose down",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "pnpm build && node --env-file-if-exists=.env dist/entrypoints/migrate.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm build && tsc --noEmit -p tsconfig.tools.json",
+    "test": "pnpm build && vitest run",
+    "test:integration": "pnpm build && node --env-file-if-exists=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.mts",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && vitest run"
+  },
+  "dependencies": {
+    "@nestjs/common": "12.2.0",
+    "@nestjs/core": "12.2.0",
+    "@nestjs/platform-fastify": "12.2.0",
+    "drizzle-orm": "0.45.4",
+    "pg": "8.23.1",
+    "pino": "10.4.0",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@nestjs/cli": "12.0.10",
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
+    "drizzle-kit": "0.31.11",
+    "eslint": "10.13.0",
+    "prettier": "3.9.10",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "5.0.5"
+  }
+}
